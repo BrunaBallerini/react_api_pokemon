@@ -7,8 +7,7 @@ interface PokemonTypes {
 }
 
 const Pokemon = (props: PokemonTypes) => {
-
-  const { name, url } = props
+  const { name, url } = props;
   const [loading, setLoading] = useState<boolean>(true);
   const [pokemonsSprite, setpokemonsSprite] = useState<string>('');
 
@@ -17,24 +16,25 @@ const Pokemon = (props: PokemonTypes) => {
     const response = await axios.get(newUrl);
     setpokemonsSprite(response.data.sprites.front_default);
     setLoading(false);
-
   }
+
+  function capitalizeFirstLetter(nameString: string) {
+    return nameString.charAt(0).toUpperCase() + nameString.slice(1);
+  }
+
 
   useEffect(() => {
     fetchSprite();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  console.log(loading);
-
-  console.log(pokemonsSprite);
-
-
   return (
     <>
-      <div>{name}, {url}</div>
-      {loading && <img src={pokemonsSprite}></img>}
-      {!loading && <img src={pokemonsSprite}></img>}
+      <div style={{ display: "flex" }}>
+        <p>Nome: {capitalizeFirstLetter(name)}</p>
+        {loading && <img src={pokemonsSprite}></img>}
+        {!loading && <img src={pokemonsSprite}></img>}
+      </div>
     </>
   )
 }
